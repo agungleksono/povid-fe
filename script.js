@@ -66,7 +66,7 @@ function showRecordDetail(detail) {
 		</div>
 		<div class="form-group">
 			<label for="gender">Gender</label>
-			<input type="gender" value="${detail.gender}" class="form-control form-control-sm" id="gender" disabled>
+			<input type="gender" value="${detail.gender == 1 ? 'Laki-Laki' : detail.gender == 2 ? 'Perempuan' : 'Undefined'}" class="form-control form-control-sm" id="gender" disabled>
 		</div>
 		<div class="form-group">
 			<label for="place_of_birth">Place of Birth</label>
@@ -85,11 +85,11 @@ function showRecordDetail(detail) {
 			<input type="kelas_id" value="${detail.kelas.name}" class="form-control form-control-sm" id="kelas_id" disabled>
 		</div>
 		<div class="form-group">
-			<label for="kelas_id">Kelas</label>
+			<label for="kelas_id">Prodi</label>
 			<input type="kelas_id" value="${detail.prodi.name}" class="form-control form-control-sm" id="kelas_id" disabled>
 		</div>
 		<div class="form-group">
-			<label for="kelas_id">Kelas</label>
+			<label for="kelas_id">Jurusan</label>
 			<input type="kelas_id" value="${detail.jurusan.name}" class="form-control form-control-sm" id="kelas_id" disabled>
 		</div>
 		<div class="form-group">
@@ -98,7 +98,7 @@ function showRecordDetail(detail) {
 		</div>
 		<div class="form-group">
 			<label for="status">Status</label>
-			<input type="text" value="${detail.status}" class="form-control form-control-sm date-format" id="confirmed_date" disabled>
+			<input type="text" value="${detail.status == 1 ? 'Positif' : detail.status == 2 ? 'Sembuh' : detail.status == 3 ? 'Meninggal' : 'Undefined'}" class="form-control form-control-sm date-format" id="confirmed_date" disabled>
 		</div>
 	</div>
 	`
