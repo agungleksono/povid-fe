@@ -38,6 +38,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 </head>
 
 <body>
@@ -300,7 +301,7 @@
                                                 <h5>Data Mahasiswa Polines yang terpapar Covid 19</h5>
 
                                                 <div class="card-header-right">
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#recordDetailModal">Tambah
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#addDataModal">Tambah
                                                         Data</button>
                                                     <!-- <ul class="list-unstyled card-option">
                                                         <li><i class="fa fa fa-wrench open-card-option"></i></li>
@@ -341,21 +342,20 @@
         </div>
     </div>
 
-    <!-- Modal start -->
-    
+    <!-- Modal start -->    
     <!-- Modal -->
-    <div class="modal fade" id="recordDetailModal" tabindex="-1" role="dialog" aria-labelledby="recordDetailModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addDataModal" tabindex="-1" role="dialog" aria-labelledby="addDataModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="recordDetailModalLabel">Form Tambah Data</h5>
+            <h5 class="modal-title" id="addDataModalLabel">Form Tambah Data</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <form id="form" method="post">
+                    <form id="form-add" method="post">
                         <div class="form-group">
                           <label for="full_name">Name</label>
                           <input type="full_name" class="form-control form-control-sm" id="full_name">
@@ -370,7 +370,7 @@
                         </div>
                         <div class="form-group">
                           <label for="date_of_birth">Date of Birth</label>
-                          <input type="date" class="form-control form-control-sm" id="date_of_birth">
+                          <input type="text" class="form-control form-control-sm date-format" id="date_of_birth">
                         </div>
                         <div class="form-group">
                           <label for="city_origin">City origin</label>
@@ -382,11 +382,11 @@
                         </div>
                         <div class="form-group">
                           <label for="confirmed_date">Confirmed Date</label>
-                          <input type="date" class="form-control form-control-sm" id="confirmed_date">
+                          <input type="text" class="form-control form-control-sm date-format" id="confirmed_date">
                         </div>
                         <div class="form-group">
                           <label for="status">Status</label>
-                          <select class="custom-select my-1 mr-sm-2">
+                          <select class="custom-select my-1 mr-sm-2" id="status">
                             <option selected disabled>Choose...</option>
                             <option value="1">Positif</option>
                             <option value="2">Sembuh</option>
@@ -405,6 +405,28 @@
         </div>
     </div>
     <!-- Modal end -->
+
+    <!--  Modal Detail start -->
+    <div class="modal fade" id="recordDetailModal" tabindex="-1" role="dialog" aria-labelledby="recordDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="recordDetailModalLabel">Detail Data</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-detail-body">
+                
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- Modal Detail end -->
 
 
     <!-- Required Jquery -->
@@ -425,10 +447,69 @@
     <script src="assets/js/vertical/vertical-layout.min.js "></script>
 
     <script type="text/javascript" src="assets/js/script.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="script.js"></script>
     <script>
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
+        // $('#myModal').on('shown.bs.modal', function () {
+        //     $('#myInput').trigger('focus')
+        // })
+        
+
+        var form = document.getElementById('form-add')
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault()
+
+            let data = {
+                full_name : document.getElementById('full_name').value,
+                gender : document.getElementById('gender').value,
+                place_of_birth : document.getElementById('place_of_birth').value,
+                date_of_birth : document.getElementById('date_of_birth').value,
+                city_origin : document.getElementById('city_origin').value,
+                kelas_id : document.getElementById('kelas_id').value,
+                confirmed_date : document.getElementById('confirmed_date').value,
+                status : document.getElementById('status').value
+
+            }
+
+            // var full_name = document.getElementById('full_name').value
+            // var gender = document.getElementById('gender').value
+            // var place_of_birth = document.getElementById('place_of_birth').value
+            // var date_of_birth = document.getElementById('date_of_birth').value
+            // var city_origin = document.getElementById('city_origin').value
+            // var kelas_id = document.getElementById('kelas_id').value
+            // var confirmed_date = document.getElementById('confirmed_date').value
+            // var status = document.getElementById('status').value
+
+            fetch("https://povid.herokuapp.com/api/v1/records", {
+                method: 'POST',
+                body: JSON.stringify(data),
+                // body: JSON.stringify({
+                //     full_name: full_name,
+                //     gender: gender,
+                //     place_of_birth: place_of_birth,
+                //     date_of_birth: date_of_birth,
+                //     city_origin: city_origin,
+                //     kelas_id: kelas_id,
+                //     confirmed_date: confirmed_date,
+                //     status: status
+                // }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then(function(response) {
+                return response.json()
+            })
+            .then(function(data) {
+                console.log(data)
+            })
+
+            // window.location.reload()
+        });
+
+        $('.date-format').datepicker({
+            format: 'yyyy-mm-dd',
         })
     </script>
 </body>
