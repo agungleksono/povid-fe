@@ -43,10 +43,10 @@ function showTableRecord(record, num) {
 		<td>${record.jurusan.name}</td>
 		<td>
 			<button
-				class="btn waves-effect waves-light btn-warning btn-outline-warning modal-detail-btn" data-recordid="${record.id}" data-toggle="modal" data-target="#recordDetailModal"><i
+				class="btn waves-effect waves-light btn-info btn-outline-info modal-detail-btn" data-recordid="${record.id}" data-toggle="modal" data-target="#recordDetailModal"><i
 					class="icofont icofont-edit-alt"></i>Detail</button>
 			<button
-				class="btn waves-effect waves-light btn-warning btn-outline-warning"><i
+				class="btn waves-effect waves-light btn-success btn-outline-success"><i
 					class="icofont icofont-edit-alt"></i>Edit</button>
 			<button
 				class="btn waves-effect waves-light btn-danger btn-outline-danger"><i
