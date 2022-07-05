@@ -34,6 +34,28 @@ fetch('https://povid.herokuapp.com/api/v1/records')
 
 
 
+function deleteConfirmation(id) {
+	let confirmAction = confirm('You want to delete?');
+
+	if (confirmAction) {
+		return deleteData(id);
+	}
+	else {
+		return false;
+	}
+}
+
+function deleteData(id) {
+	return fetch('https://povid.herokuapp.com/api/v1/records/' + id, {
+		method: 'DELETE',
+		headers: {
+			'Content-type': 'application/json; charset=UTF-8'
+		 },
+	})
+	.then(response => response.json())
+	.then(data =>  console.log(data))
+	.catch(err => console.log(err))
+}
 
 function showTableRecord(record, num) {
 	return `
@@ -46,10 +68,10 @@ function showTableRecord(record, num) {
 				class="btn waves-effect waves-light btn-info btn-outline-info modal-detail-btn" data-recordid="${record.id}" data-toggle="modal" data-target="#recordDetailModal"><i
 					class="icofont icofont-edit-alt"></i>Detail</button>
 			<button
-				class="btn waves-effect waves-light btn-success btn-outline-success"><i
+				class="btn waves-effect waves-light btn-success btn-outline-success" data-recordid="${record.id}"><i
 					class="icofont icofont-edit-alt"></i>Edit</button>
 			<button
-				class="btn waves-effect waves-light btn-danger btn-outline-danger"><i
+				class="btn waves-effect waves-light btn-danger btn-outline-danger delete-btn" data-recordid="${record.id}" onclick="deleteConfirmation(${record.id})"><i
 					class="icofont icofont-delete-alt"></i>Hapus</button>
 
 		</td>
