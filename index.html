@@ -288,6 +288,34 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- <div class="row statistik">
+                            <div class="col-3">
+                                <div class="card bg-c-red card-statistik">
+                                    <div class="card-body">
+                                        <h5 class="card-title">DATA POSITIF</h5>
+                                        <H2>50</H2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card bg-c-green card-statistik">
+                                    <div class="card-body">
+                                        <h5 class="card-title">DATA SEMBUH</h5>
+                                        <H2>50</H2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card bg-c-blue card-statistik">
+                                    <div class="card-body">
+                                        <h5 class="card-title">DATA MENINGGAL</h5>
+                                        <H2>50</H2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
                         <!-- Page-header end -->
                         <div class="pcoded-inner-content">
                             <!-- Main-body start -->
@@ -295,13 +323,23 @@
                                 <div class="page-wrapper">
                                     <!-- Page-body start -->
                                     <div class="page-body">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Statistik</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row statistik-container">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- Basic table card start -->
                                         <div class="card">
                                             <div class="card-header">
                                                 <h5>Data Mahasiswa Polines yang terpapar Covid 19</h5>
 
                                                 <div class="card-header-right">
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#addDataModal">Tambah
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light modal-add-btn" id="btn-add" data-toggle="modal" data-target="#addDataModal">Tambah
                                                         Data</button>
                                                 </div>
                                             </div>
@@ -367,19 +405,33 @@
                         </div>
                         <div class="form-group">
                           <label for="date_of_birth">Date of Birth</label>
-                          <input type="text" class="form-control form-control-sm date-format" id="date_of_birth">
+                          <input type="date" class="form-control form-control-sm date-format" id="date_of_birth">
                         </div>
                         <div class="form-group">
                           <label for="city_origin">City origin</label>
                           <input type="city_origin" class="form-control form-control-sm" id="city_origin">
                         </div>
                         <div class="form-group">
-                          <label for="kelas_id">Kelas ID</label>
-                          <input type="kelas_id" class="form-control form-control-sm" id="kelas_id">
+                            <label for="jurusan">Jurusan</label>
+                            <select class="custom-select my-1 mr-sm-2" id="jurusan">
+                                <option selected disabled>Pilih Jurusan...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="prodi">Prodi</label>
+                            <select class="custom-select my-1 mr-sm-2" id="prodi">
+                                <option selected disabled>Pilih Prodi...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="kelas">Kelas</label>
+                            <select class="custom-select my-1 mr-sm-2" id="kelas">
+                                <option selected disabled>Pilih Kelas...</option>
+                            </select>
                         </div>
                         <div class="form-group">
                           <label for="confirmed_date">Confirmed Date</label>
-                          <input type="text" class="form-control form-control-sm date-format" id="confirmed_date">
+                          <input type="date" class="form-control form-control-sm date-format" id="confirmed_date">
                         </div>
                         <div class="form-group">
                           <label for="status">Status</label>
@@ -390,13 +442,13 @@
                             <option value="3">Meninggal</option>
                           </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-primary" onclick="addData()" data-dismiss="modal">Submit</button>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
             </div>
         </div>
         </div>
@@ -425,6 +477,28 @@
     </div>
     <!-- Modal Detail end -->
 
+    <!--  Modal Edit start -->
+    <div class="modal fade" id="editDataModal" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="editDataModalLabel">Edit Data</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-edit-body">
+                
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- Modal Edit end -->
+
 
     <!-- Required Jquery -->
     <script type="text/javascript" src="assets/js/jquery/jquery.min.js "></script>
@@ -450,63 +524,13 @@
         // $('#myModal').on('shown.bs.modal', function () {
         //     $('#myInput').trigger('focus')
         // })
-        
 
-        var form = document.getElementById('form-add')
+        // $('.date-format').datepicker({
+        //     format: 'yyyy-mm-dd',
+        // })
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault()
-
-            let data = {
-                full_name : document.getElementById('full_name').value,
-                gender : document.getElementById('gender').value,
-                place_of_birth : document.getElementById('place_of_birth').value,
-                date_of_birth : document.getElementById('date_of_birth').value,
-                city_origin : document.getElementById('city_origin').value,
-                kelas_id : document.getElementById('kelas_id').value,
-                confirmed_date : document.getElementById('confirmed_date').value,
-                status : document.getElementById('status').value
-
-            }
-
-            // var full_name = document.getElementById('full_name').value
-            // var gender = document.getElementById('gender').value
-            // var place_of_birth = document.getElementById('place_of_birth').value
-            // var date_of_birth = document.getElementById('date_of_birth').value
-            // var city_origin = document.getElementById('city_origin').value
-            // var kelas_id = document.getElementById('kelas_id').value
-            // var confirmed_date = document.getElementById('confirmed_date').value
-            // var status = document.getElementById('status').value
-
-            fetch("https://povid.herokuapp.com/api/v1/records", {
-                method: 'POST',
-                body: JSON.stringify(data),
-                // body: JSON.stringify({
-                //     full_name: full_name,
-                //     gender: gender,
-                //     place_of_birth: place_of_birth,
-                //     date_of_birth: date_of_birth,
-                //     city_origin: city_origin,
-                //     kelas_id: kelas_id,
-                //     confirmed_date: confirmed_date,
-                //     status: status
-                // }),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            })
-            .then(function(response) {
-                return response.json()
-            })
-            .then(function(data) {
-                console.log(data)
-            })
-
-            // window.location.reload()
-        });
-
-        $('.date-format').datepicker({
-            format: 'yyyy-mm-dd',
+        $('.modal').on('hidden.bs.modal', function () {
+            $(this).find('form').trigger('reset');
         })
     </script>
 </body>
