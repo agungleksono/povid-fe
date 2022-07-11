@@ -1,34 +1,4 @@
 /** Function untuk get semua data */
-// function getData() {
-// 	fetch('https://povid.herokuapp.com/api/v1/records')
-// 		.then(response => response.json())
-// 		.then(response => {
-// 			const records = response.data.data;
-// 			let table_records = '';
-// 			let num = 0;
-
-// 			records.forEach(record => {
-// 				num++
-// 				table_records += showTableRecord(record, num)
-// 			});
-// 			const recordContainer = document.querySelector('.record-container');
-// 			recordContainer.innerHTML = table_records;
-// 		})
-// 		.catch(err => console.log('Request Failed', err));
-// }
-
-// function getDataById(id) {
-// 	fetch('https://povid.herokuapp.com/api/v1/records/' + id)
-// 		.then(response => response.json())
-// 		.then(record => {
-// 			const data = record.data;
-// 			const recordDetail = showRecordDetail(data);
-// 			const modalBody = document.querySelector('.modal-detail-body');
-// 			modalBody.innerHTML = recordDetail;
-// 		})
-// 		.catch(err => console.log('Request Failed', err));
-// }
-
 function getData() {
 	return fetch('https://povid.herokuapp.com/api/v1/records')
 		.then(response => response.json())
@@ -48,6 +18,7 @@ async function showData() {
 	recordContainer.innerHTML = table_records;
 }
 
+/** Function untuk menampilkan detail data */
 function getDetailData(id) {
 	return fetch('https://povid.herokuapp.com/api/v1/records/' + id)
 		.then(response => response.json())
@@ -60,6 +31,7 @@ async function showDetailData(id) {
 	modalBody.innerHTML = showRecordDetail(data);
 }
 
+/** Function untuk menampilkan data statistik */
 function getStatisticData() {
 	return fetch('https://povid.herokuapp.com/api/v1/records/statistics')
 			.then(response => response.json())
@@ -68,7 +40,6 @@ function getStatisticData() {
 
 async function showStatistic() {
 	const statistics = await getStatisticData();
-	console.log(statistics)
 	const statisticContainer = document.querySelector('.statistik-container');
 	statisticContainer.innerHTML = showStatisticCard(statistics);
 }
@@ -217,15 +188,6 @@ async function getEditData(id) {
 	})
 }
 
-// async function showEditJurusan() {
-// 	const jurusans = await getJurusan()
-// 	selectJurusan.innerHTML = '<option selected disabled>Pilih Jurusan...</option>';
-// 	jurusans.forEach(jurusan => {
-// 		selectJurusan.innerHTML += `<option value="${jurusan.id}">${jurusan.name}</option>`;
-// 		selectElement.innerHTML += `<option value="${data.id}" ${userData.jurusan.id == data.id ? 'selected' : ''}>${data.name}</option>`;
-// 	});
-// }
-
 function deleteConfirmation(id) {
 	let confirmAction = confirm('You want to delete?');
 	return confirmAction ? deleteData(id) : false;
@@ -246,157 +208,7 @@ function deleteData(id) {
 	.catch(err => console.log(err))
 }
 
-
-
-
-// selectProdi.addEventListener('change', event => {
-// 	const prodiId = event.target.value;
-// 	fetch(`https://povid.herokuapp.com/api/v1/prodi/${prodiId}/kelas`)
-// 		.then(response => response.json())
-// 		.then(response => {
-// 			const kelas = response.data;
-// 			console.log(kelas);
-// 			selectKelas.innerHTML = '<option selected disabled>Pilih Kelas...</option>';
-// 			kelas.forEach(data => {
-// 				selectKelas.innerHTML += `<option value="${data.id}">${data.name}</option>`
-// 			})
-// 		})
-// })
-
-// function getJurusan() {
-// 	fetch('https://povid.herokuapp.com/api/v1/jurusans')
-// 		.then(response => response.json())
-// 		.then(response => {
-// 			const jurusan = response.data;
-// 			selectJurusan.innerHTML = '<option selected disabled>Pilih Jurusan...</option>';
-// 			jurusan.forEach(data => {
-// 				selectJurusan.innerHTML += `<option value="${data.id}">${data.name}</option>`;
-// 			});
-// 		});
-// }
-
-
-/** Ketika page di load, jalankan fungsi getData & getJurusan */
-// window.addEventListener('DOMContentLoaded', getData);
-// window.addEventListener('DOMContentLoaded', getJurusan);
-
-// function getProdi(id) {
-// 	fetch(`https://povid.herokuapp.com/api/v1/jurusan/${id}/prodi`)
-// 		.then(response => response.json())
-// 		.then(response => {
-// 			const prodi = response.data;
-// 			return prodi;
-// 		});
-// }
-
-// async function getProdi(id) {
-//     let response = await fetch(`https://povid.herokuapp.com/api/v1/jurusan/${id}/prodi`);
-//     let data = await response.json();
-//     return data.data;
-// }
-
-// function geKelas(id) {
-// 	fetch(`https://povid.herokuapp.com/api/v1/prodi/${id}/kelas`)
-// 		.then(response => response.json())
-// 		.then(response => {
-// 			return response.data
-// 		})
-// 		.catch(err => console.log(err))
-// }
-
-
-// function getJurusanEdit(userData, selectElement) {
-// 	fetch('https://povid.herokuapp.com/api/v1/jurusans')
-// 		.then(response => response.json())
-// 		.then(response => {
-// 			const jurusan = response.data;
-// 			// console.log(selectElement);
-// 			// console.log(userData)
-// 			selectElement.innerHTML = '<option selected disabled>Pilih Jurusan...</option>';
-// 			jurusan.forEach(data => {
-// 				selectElement.innerHTML += `<option value="${data.id}" ${userData.jurusan.id == data.id ? 'selected' : ''}>${data.name}</option>`;
-// 			});
-// 		});
-// }
-
-// function getProdiEdit(userData, selectElement) {
-// 	fetch(`https://povid.herokuapp.com/api/v1/jurusan/${userData.jurusan.id}/prodi`)
-// 		.then(response => response.json())
-// 		.then(response => {
-// 			const prodi = response.data;
-// 			selectElement.innerHTML = '<option selected disabled>Pilih Jurusan...</option>';
-// 			prodi.forEach(data => {
-// 				selectElement.innerHTML += `<option value="${data.id}" ${userData.prodi.id == data.id ? 'selected' : ''}>${data.name}</option>`;
-// 			});
-// 		});
-// }
-
-// function getKelasEdit(userData, selectElement) {
-// 	fetch(`https://povid.herokuapp.com/api/v1/prodi/${userData.prodi.id}/kelas`)
-// 		.then(response => response.json())
-// 		.then(response => {
-// 			const kelas = response.data;
-// 			selectElement.innerHTML = '<option selected disabled>Pilih Jurusan...</option>';
-// 			kelas.forEach(data => {
-// 				selectElement.innerHTML += `<option value="${data.id}" ${userData.kelas.id == data.id ? 'selected' : ''}>${data.name}</option>`;
-// 			});
-// 		});
-// }
-
-
-
-
-// function getEditData(id) {
-// 	fetch('https://povid.herokuapp.com/api/v1/records/' + id)
-// 		.then(response => response.json())
-// 		.then(record => {
-// 			const data = record.data;
-// 			const editData = showEditData(data);
-// 			const modalBody = document.querySelector('.modal-edit-body');
-// 			modalBody.innerHTML = editData;
-
-// 			const selectEditJurusan = document.querySelector('select#jurusanEdit');
-// 			const selectEditProdi = document.querySelector('select#prodiEdit');
-// 			const selectEditKelas = document.querySelector('select#kelasEdit');
-
-// 			getJurusanEdit(data, selectEditJurusan);
-// 			getProdiEdit(data, selectEditProdi);
-// 			getKelasEdit(data, selectEditKelas);
-			
-// 			selectEditJurusan.addEventListener('change', event => {
-// 				const jurusanId = event.target.value;
-// 				fetch(`https://povid.herokuapp.com/api/v1/jurusan/${jurusanId}/prodi`)
-// 					.then(response => response.json())
-// 					.then(response => {
-// 						const prodi = response.data;
-// 						console.log(prodi);
-// 						selectEditProdi.innerHTML = '<option selected disabled>Pilih Prodi...</option>';
-// 						selectEditKelas.innerHTML = '<option selected disabled>Pilih Kelas...</option>';
-// 						prodi.forEach(data => {
-// 							selectEditProdi.innerHTML += `<option value="${data.id}">${data.name}</option>`
-// 						})
-// 					})
-// 			})
-
-// 			selectEditProdi.addEventListener('change', event => {
-// 				const prodiId = event.target.value;
-// 				fetch(`https://povid.herokuapp.com/api/v1/prodi/${prodiId}/kelas`)
-// 					.then(response => response.json())
-// 					.then(response => {
-// 						const kelas = response.data;
-// 						console.log(kelas);
-// 						selectEditKelas.innerHTML = '<option selected disabled>Pilih Kelas...</option>';
-// 						kelas.forEach(data => {
-// 							selectEditKelas.innerHTML += `<option value="${data.id}">${data.name}</option>`
-// 						})
-// 					})
-// 			})
-// 		})
-// 		.catch(err => console.log('Request Failed', err));
-// }
-
 function editData(id) {
-	// console.log(document.getElementById('edit_place_of_birth').value)
 	let data = {
 		full_name : document.getElementById('edit_full_name').value,
 		gender : document.getElementById('edit_gender').value,
